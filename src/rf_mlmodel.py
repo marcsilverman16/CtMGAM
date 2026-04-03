@@ -381,7 +381,8 @@ def train_model(df, bits_to_keep):
         "class_weight": ['balanced', {0:1, 1: ratio}, {0: 1, 1: 10}, {0: 1, 1: 20}] 
     } 
     
-    seed_1 = random.randint(0, 10000) 
+    seed_1 = random.randint(0, 10000)
+    
     print(f"\nRandom seed for parameter search: {seed_1}") 
     rf = RandomForestClassifier(random_state=seed_1) 
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed_1) 
@@ -401,7 +402,8 @@ def train_model(df, bits_to_keep):
 
     best_params = grid_search.best_params_
 
-    seed_2 = random.randint(0, 10000) 
+    seed_2 = random.randint(0, 10000)
+
     print("\nRandom seed for cross-validation for unbias performance evaluation:", seed_2) 
     best_model_cv = RandomForestClassifier(**best_params, random_state=seed_2) 
     cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=seed_2) 
@@ -423,7 +425,8 @@ def train_model(df, bits_to_keep):
     plot_probability_distribution(y, y_proba, "../Figures/Model_Analysis")
 
     #train final model on all data for threshold optimization & deployment 
-    seed_3 = random.randint(0, 10000) 
+    seed_3 = random.randint(0, 10000)
+
     print("\nRandom seed for final model training:", seed_3) 
     final_model = RandomForestClassifier(**best_params, random_state=seed_3) 
     final_model.fit(X, y)
@@ -522,7 +525,7 @@ def main():
     df, bits_to_keep = process_data(raw_data) 
     final_model, performance_metrics, predictions_df, optimal_threshold = train_model(df, bits_to_keep) 
     
-    # print(df.head()) 
+    # print(df.head())
     
     raw_data_screening = read_data(file_screening) 
     fp_new_data = createFingerprints(raw_data_screening) 
